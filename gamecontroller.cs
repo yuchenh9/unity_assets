@@ -246,7 +246,18 @@ public class gamecontroller : MonoBehaviour
 			bowls.Add(bowladded);
 			
 		}
-		void addAnimation( string name,float time,int index=99999,GameObject obj=null, float rotateDegree=0f,Vector3 rotateAxis= default){
+		// rotateDegrees: A dictionary storing the rotation degrees required for each animation step or phase.
+		// animationObjectLists: A dictionary that appears to map each animation name to a list of GameObjects. These GameObjects are likely the objects being animated.
+		// animationRotateAxiss: A dictionary storing the rotation axis (a Vector3) for different animation steps or phases.
+		// animationTimes: A dictionary that associates each animation name with a list of time data, likely representing the duration or timing of each animation step or phase.
+		// name: A string parameter denoting the name or identifier of the animation.
+		// time: A float parameter representing the duration or some other time aspect of the animation.
+		// index: An integer parameter, possibly indicating where in the existing animation data lists new data should be inserted.
+		// obj: A GameObject parameter, possibly representing an object to be animated, but its use is commented out in the function provided.
+		// rotateDegree: A float parameter indicating the amount of rotation, in degrees, required for a particular animation step or phase.
+		// rotateAxis: A Vector3 parameter representing the axis around which the object should be rotated during the animation.
+
+		void addAnimation( string name,float time,int index=99999,GameObject obj=null, float rotateDegree=0f,Vector3 rotateAxis= default){//edit coroutine
 			
 			if(!animationTimes.ContainsKey(name)){//init if the animation is new
 				rotateDegrees.Add(name,new List<float>());
@@ -269,7 +280,7 @@ public class gamecontroller : MonoBehaviour
 				animationTimes[name].Insert(0, time);
 			}
 		}
-		void Start()
+		void Start()//edit coroutine
 		{
 			bundleloader_enabled=checkScript();
 		hasLoaded = false;
@@ -311,6 +322,7 @@ public class gamecontroller : MonoBehaviour
 		*/
 		bowl = Resources.Load<GameObject>("bowl");
 		Debug.Log("bowl loaded");
+
 		//pan=Resources.Load<GameObject>("pan");
 		var roots = UnityEngine.SceneManagement.SceneManager.GetActiveScene().GetRootGameObjects();
 		Debug.Log("roots retrieved");
@@ -338,7 +350,7 @@ public class gamecontroller : MonoBehaviour
 		Debug.Log("Second animation added");
 		}
 
-		private void FixedUpdate()
+		private void FixedUpdate()//edit coroutine
 		{
 			if(animationIndex!=-1){
 				
@@ -398,7 +410,7 @@ public class gamecontroller : MonoBehaviour
 				AddOutline(obj);
 			}
 		}
-		void PutToBowl(int toIndex){
+		void PutToBowl(int toIndex){//edit coroutine
 			currentlist.Add(bowls[cameraIndex]);
 			TeleportGameObjects(currentlist,new Vector3((float)(positions[toIndex]+0.06), (float)-0.16, (float)2.225));
 			currentlist.RemoveAt(currentlist.Count - 1);
@@ -418,7 +430,7 @@ public class gamecontroller : MonoBehaviour
 			currentlist=listOfLists[toIndex];
 			AddAllOutlines(currentlist);
 			cameraIndex=toIndex;
-			}
+		}
 		void Update()
 		{
 			if (!hasLoaded){
@@ -534,12 +546,12 @@ public class gamecontroller : MonoBehaviour
             {
                 //Slice(3);
 				Debug.Log("C pressed");
-                ReactSlice(4);
+                //ReactSlice(4);
                 //_isDragging = false;
             }
 			if (Input.GetMouseButton(0))
 			{
-                ReactSlice(4);
+                //ReactSlice(4);
 			}
 			/*
 			if (Input.GetMouseButtonUp(0))

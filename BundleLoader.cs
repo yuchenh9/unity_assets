@@ -59,7 +59,7 @@ public class BundleLoader : MonoBehaviour
                         string simpleName = parts[parts.Length - 1]; 
                         Prefabs.Add(simpleName, prefab);  // store the prefabs in the dictionary
                         
-                    Debug.Log("Loaded prefab:"+prefab);
+                        Debug.Log("Loaded prefab:"+prefab);
                     }
                 }
                 IsLoaded = true;
