@@ -10,6 +10,8 @@ public class RotateWithFinger : MonoBehaviour
     private bool isResetting = false;
     private Quaternion initialRotation;
     private Quaternion afterRotation;
+    private Coroutine undoCoroutine = null;
+    private Coroutine returnCoroutine = null;
 
 
     void Start()
@@ -46,8 +48,25 @@ public class RotateWithFinger : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (undoCoroutine != null)
+                {
+                    StopCoroutine(undoCoroutine);
+                    undoCoroutine = null;
+                }
+
+                if (returnCoroutine != null)
+                {
+                    StopCoroutine(returnCoroutine);
+                    returnCoroutine = null;
+                }
+
+            isResetting = false;
             startTouchPosition = Input.mousePosition;//startTouchPosition is where the mouse first clicked
             initialRotation = transform.rotation;  // Store the rotation before any transformations
+            }
+
         }
         else if (Input.GetMouseButton(0))
         {
@@ -55,10 +74,10 @@ public class RotateWithFinger : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            StartCoroutine(UndoRotationSmoothly(0.35f));  // Here, 0.5f is the duration over which the undo will occur. Adjust as desired.
-
-            StartCoroutine(ReturnToOriginalRotation());
+            undoCoroutine = StartCoroutine(UndoRotationSmoothly(0.35f));
+            returnCoroutine = StartCoroutine(ReturnToOriginalRotation());
         }
+
     }
 
     void RotateObjectBasedOnInput(Vector2 currentPosition)
@@ -69,7 +88,7 @@ public class RotateWithFinger : MonoBehaviour
         deltaTouchPosition = currentTouchPosition - startTouchPosition;
 
         // Apply the rotations as you previously did
-        transform.Rotate(Vector3.down * deltaTouchPosition.x * 0.1f, Space.World);
+        transform.Rotate(Vector3.down * deltaTouchPosition.x * 0.1f, Space.World);//where you set the rotate speed
         transform.Rotate(Vector3.right * deltaTouchPosition.y * 0.1f, Space.World);
 
         afterRotation = transform.rotation;  // Store the rotation after transformations
@@ -98,7 +117,7 @@ public class RotateWithFinger : MonoBehaviour
     IEnumerator UndoRotationSmoothly(float duration)
     {
         float elapsedTime = 0;
-        float percentageToReverse = 0.15f;  // 15% reversal
+        float percentageToReverse = 0.15f;  // 15% reversal where you set the reversal amount
         
         Quaternion targetRotation = Quaternion.Slerp(afterRotation, initialRotation, percentageToReverse);
 
@@ -112,6 +131,7 @@ public class RotateWithFinger : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+        undoCoroutine = null; 
 
     }
     /*
@@ -136,7 +156,7 @@ public class RotateWithFinger : MonoBehaviour
 
         isResetting = true;
 
-        yield return new WaitForSeconds(0.35f);  // Brief delay after the undo effect
+        yield return new WaitForSeconds(0.25f);  // Brief delay after the undo effect where you set the wait time
 
         // Now smoothly rotate back to the original rotation
         float elapsed = 0f;
@@ -152,5 +172,6 @@ public class RotateWithFinger : MonoBehaviour
 
         transform.rotation = originalRotation;
         isResetting = false;
+        returnCoroutine = null;
     }
 }
