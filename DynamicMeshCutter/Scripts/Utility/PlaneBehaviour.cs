@@ -14,7 +14,7 @@ namespace DynamicMeshCutter
                 var targets = root.GetComponentsInChildren<MeshTarget>();
                 foreach (var target in targets)
                 {
-                    Cut(target, transform.position, transform.forward, null);
+                    Cut(target, transform.position, transform.forward, null, OnCreated);
                 }
             }
         }

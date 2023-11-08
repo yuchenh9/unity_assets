@@ -3,7 +3,7 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using cakeslice; 
+
 namespace DynamicMeshCutter
 {
     public class MeshCreationData
@@ -99,7 +99,7 @@ namespace DynamicMeshCutter
                         }
                         else
                         {
-                            CreateMesh(ref root, ref parent, target, mesh, vMesh, materials, bt, true);//<rig
+                            CreateMesh(ref root, ref parent, target, mesh, vMesh, materials, bt, true);
                         }
                         break;
                     case Behaviour.Animation:
@@ -127,11 +127,10 @@ namespace DynamicMeshCutter
                 nTarget.SeparateMeshes = target.SeparateMeshes;
                 nTarget.ApplyTranslation = target.ApplyTranslation;
                 nTarget.GroupBehaviours = target.GroupBehaviours;
-                //Select.Add(root);
-                //Select.Toggle(root);
+
                 //target scale
                 nTarget.transform.localScale = target.transform.localScale;
-                
+
                 //if inherting, both upper and lower side behaviour will remain the same. otherwise, both sides will have the same effect
                 if (target.Inherit[bt])
                 {
@@ -159,6 +158,7 @@ namespace DynamicMeshCutter
                 cData.CreatedObjects[i] = parent.gameObject;
                 cData.CreatedTargets[i] = nTarget;
             }
+
             return cData;
         }
 
@@ -167,23 +167,18 @@ namespace DynamicMeshCutter
             parent = new GameObject($"{target.GameobjectRoot.name}").transform;
             parent.transform.rotation = target.transform.rotation;
             parent.transform.position = target.transform.position;
-            //parent.gameObject.tag = target.GameobjectRoot.tag;
-            parent.gameObject.tag = "Untagged";
+            parent.gameObject.tag = target.GameobjectRoot.tag;
 
             root = new GameObject($"{target.gameObject.name}");
             root.transform.position = target.transform.position;
             root.transform.rotation = target.transform.rotation;
-            //root.gameObject.tag = target.transform.tag;
-            
+            root.gameObject.tag = target.transform.tag;
+
             List<GameObject> currentlist = gamecontroller.Instance.currentlist;
             currentlist.Add(root.gameObject);
-            Debug.Log("Added"+root.gameObject);
             var filter = root.AddComponent<MeshFilter>();
             var renderer = root.AddComponent<MeshRenderer>();
-            if(!(gamecontroller.Instance.build)){
-                var outline = root.AddComponent<Outline>();
-            outline.eraseRenderer=false;
-            }
+
             filter.mesh = mesh;
             renderer.materials = materials;
 
@@ -462,7 +457,7 @@ namespace DynamicMeshCutter
             meshRoot = nRenderer.gameObject;
             Transform rootbone = nRenderer.rootBone;
 
-            if (target.DynamicRagdoll != null)  
+            if (target.DynamicRagdoll != null)
             {
                 DynamicRagdoll nRagdoll = parent.GetComponent<DynamicRagdoll>();
                 //keep but modifiy dynamic ragdoll component
@@ -499,7 +494,7 @@ namespace DynamicMeshCutter
         {
             if (createdObjects == null)
                 return;
-            Debug.Log("trans");
+
             VirtualPlane plane = info.Plane;
 
             for (int i = 0; i < createdObjects.Length; i++)

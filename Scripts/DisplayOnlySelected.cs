@@ -1,5 +1,9 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
+using cakeslice;
+
+namespace DynamicMeshCutter
+{
 
 public class DisplayOnlySelected : MonoBehaviour
 {
@@ -23,10 +27,14 @@ public class DisplayOnlySelected : MonoBehaviour
         
         originalRotation = selectedObject.transform.rotation;
     }
-
     void Update()
     {
         HandleMouseInput();
+        if (Input.GetKeyDown(KeyCode.P))
+        {    
+            MouseBehaviour.Instance.SliceByAxis(5,selectedObject);
+        }
+
     }
     void HandleMouseInput()
     {
@@ -164,4 +172,5 @@ public class DisplayOnlySelected : MonoBehaviour
         }
     }
     
+}
 }

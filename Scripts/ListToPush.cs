@@ -3,10 +3,10 @@ using UnityEngine;
 
 namespace DynamicMeshCutter
 {
-    public class gamecontroller : MonoBehaviour
+    public class ListToPush : MonoBehaviour
     {
         // Singleton instance
-        public static gamecontroller Instance { get; private set; }
+        public static ListToPush Instance { get; private set; }
 
         public List<GameObject> currentlist;
 

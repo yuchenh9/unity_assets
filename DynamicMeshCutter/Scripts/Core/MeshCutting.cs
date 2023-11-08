@@ -35,7 +35,6 @@ namespace DynamicMeshCutter
 
         public VirtualMesh[] Cut(ref Info info)
         {
-            //Debug.Log("Cutting");
             var plane = info.Plane;
             bool doSeperateMeshes = info.MeshTarget.SeparateMeshes;
             VirtualMesh targetVirtualMesh = info.TargetVirtualMesh;

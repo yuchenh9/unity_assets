@@ -47,10 +47,7 @@ namespace DynamicMeshCutter
         {
             MeshTargetShephard.UnRegisterMeshTarget(this);
         }
-        private void OnMouseDown()
-        {
-            Debug.Log("Mouse Click Detected");
-        }
+
         public MeshRenderer MeshRenderer
         {
             get
